@@ -1,5 +1,7 @@
 import unittest
 
+import numpy as np
+
 import pyslope
 
 # assert pyslope.add(1, 2) == 3
@@ -7,14 +9,14 @@ import pyslope
 
 # assert pyslope.subtract(1, 2) == -1
 
+class TestLinearAlgebra(unittest.TestCase):
+    def test_det(self):
+        a = np.array([[1, 0.1], [0.1, 1]])
+        det = pyslope.det(a)
+        self.assertEqual(det, 0.99, "0.99")
 
-class TestSum(unittest.TestCase):
-    def test_sum(self):
-        self.assertEqual(sum([1, 2, 3]), 6, "Should be 6")
-
-    def test_sum_tuple(self):
-        self.assertEqual(sum((1, 2, 2)), 6, "Should be 6")
-
+    def test_add(self):
+        self.assertEqual(pyslope.add(1, 2), 3, "Should be 3")
 
 if __name__ == '__main__':
     unittest.main()
