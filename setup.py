@@ -1,6 +1,7 @@
 from glob import glob
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup, Extension
+import pybind11 
 
 __version__ = "0.0.1"
 
@@ -28,10 +29,10 @@ ext_modules = [
     Extension(
         "_pyslope",
         sorted(glob("src/*.cpp")),
-        include_dirs=['extern/pybind11/include', 'extern/eigen-3.4.0'],
+        include_dirs=[pybind11.get_include(), 'extern/eigen-3.4.0'],
         language='c++',
-        extra_compile_args = cpp_args
-    )
+        extra_compile_args = cpp_args,
+    ),
 ]
 
 setup(
