@@ -1,6 +1,6 @@
 from glob import glob
 from pybind11.setup_helpers import Pybind11Extension, build_ext
-from setuptools import setup
+from setuptools import setup, Extension
 
 __version__ = "0.0.1"
 
@@ -13,12 +13,25 @@ __version__ = "0.0.1"
 #   Sort input source files if you glob sources to ensure bit-for-bit
 #   reproducible builds (https://github.com/pybind/python_example/pull/53)
 
+# ext_modules = [
+#     Pybind11Extension(
+#         "_pyslope",
+#         sorted(glob("src/*.cpp")),
+#         define_macros=[('VERSION_INFO', __version__)],
+#         cxx_std=14,
+#     ),
+# ]
+
+cpp_args = ['-std=c++11']
+
 ext_modules = [
-    Pybind11Extension(
+    Extension(
         "_pyslope",
         sorted(glob("src/*.cpp")),
-        define_macros=[('VERSION_INFO', __version__)],
-    ),
+        include_dirs=['extern/pybind11/include', 'extern/eigen-3.4.0'],
+        language='c++',
+        extra_compile_args = cpp_args
+    )
 ]
 
 setup(
@@ -34,6 +47,6 @@ setup(
     extras_require={"test": "pytest"},
     # Currently, build_ext only provides an optional "highest supported C++
     # level" feature, but in the future it may provide more features.
-    cmdclass={"build_ext": build_ext},
+    # cmdclass={"build_ext": build_ext},
     zip_safe=False,
 )
