@@ -1,7 +1,8 @@
 from glob import glob
-from pybind11.setup_helpers import Pybind11Extension, build_ext
-from setuptools import setup, Extension
-import pybind11 
+
+import pybind11
+# from pybind11.setup_helpers import Pybind11Extension, build_ext
+from setuptools import Extension, setup
 
 __version__ = "0.0.1"
 
@@ -23,7 +24,7 @@ __version__ = "0.0.1"
 #     ),
 # ]
 
-cpp_args = ['-std=c++11']
+cpp_args = ['-std=c++14']
 
 ext_modules = [
     Extension(
@@ -31,7 +32,7 @@ ext_modules = [
         sorted(glob("src/*.cpp")),
         include_dirs=[pybind11.get_include(), 'extern/eigen-3.4.0'],
         language='c++',
-        extra_compile_args = cpp_args,
+        extra_compile_args=cpp_args,
     ),
 ]
 
@@ -40,11 +41,11 @@ setup(
     version=__version__,
     author="Johan Larsson",
     author_email="johanlarsson@outlook.com",
-    url=
-    "https://github.com/jolars/pyslope",
+    url="https://github.com/jolars/pyslope",
     description="Sorted L-One Penalized Estimation",
     long_description="",
     ext_modules=ext_modules,
+    install_requires=['numpy'],
     # extras_require={"test": "pytest"},
     # Currently, build_ext only provides an optional "highest supported C++
     # level" feature, but in the future it may provide more features.
