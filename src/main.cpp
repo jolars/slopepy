@@ -1,11 +1,10 @@
-#include <pybind11/eigen.h>
-#include <pybind11/pybind11.h>
-
 #include <Eigen/Core>
 #include <Eigen/LU>
-
-#define STRINGIFY(x) #x
-#define MACRO_STRINGIFY(x) STRINGIFY(x)
+#include <pybind11/eigen.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include "slope/prox.h"
+#include "det.h"
 
 int
 add(int i, int j)
@@ -20,30 +19,23 @@ inv(const Eigen::MatrixXd& xs)
 }
 
 double
-det(const Eigen::MatrixXd& xs)
+detExport(const Eigen::MatrixXd& xs)
 {
-  return xs.determinant();
+  return det(xs);
 }
 
-namespace py = pybind11;
-
-PYBIND11_MODULE(_pyslope, m)
+Eigen::MatrixXd
+proxExport(const Eigen::MatrixXd& beta,
+           const Eigen::VectorXd& lambda,
+           const int method)
 {
-  m.doc() = R"pbdoc(
-        Pybind11 example plugin
-        -----------------------
+  auto prox_method = ProxMethod(method);
 
-        .. currentmodule:: pyslope
+  return prox(beta, lambda, prox_method);
+}
 
-        .. autosummary::
-           :toctree: _generate
-
-           add
-           subtract
-           inv
-           det
-    )pbdoc";
-
+PYBIND11_MODULE(_slopepy, m)
+{
   m.def("add", &add, R"pbdoc(
         Add two numbers
 
@@ -59,11 +51,7 @@ PYBIND11_MODULE(_pyslope, m)
 
   m.def("inv", &inv, "Compute the inverse of a matrix.");
 
-  m.def("det", &det, "Compute the determinant of a matrix.");
+  m.def("detxx", &detExport, "Compute the determinant of a matrix.");
 
-#ifdef VERSION_INFO
-  m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
-#else
-  m.attr("__version__") = "dev";
-#endif
+  m.def("sorted_l1_prox", &proxExport, "Return the Sorted L1 Prox");
 }

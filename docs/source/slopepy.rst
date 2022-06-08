@@ -1,13 +1,13 @@
-pyslope package
+slopepy package
 ===============
 
 Submodules
 ----------
 
-pyslope.example module
+slopepy.example module
 ----------------------
 
-.. automodule:: pyslope.example
+.. automodule:: slopepy.example
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ pyslope.example module
 Module contents
 ---------------
 
-.. automodule:: pyslope
+.. automodule:: slopepy
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,8 +1,8 @@
-pyslope
+slopepy
 =======
 
 .. toctree::
    :maxdepth: 4
 
-   pyslope
+   slopepy
    setup

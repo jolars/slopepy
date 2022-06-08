@@ -20,8 +20,8 @@ sys.path.insert(0, os.path.abspath('../../'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'pyslope: Sorted L-One Penalized Estimation'
-copyright = '2021, Johan Larsson'
+project = 'slopepy: Sorted L-One Penalized Estimation'
+copyright = '2022, Johan Larsson'
 author = 'Johan Larsson'
 
 # The full version, including alpha/beta/rc tags
